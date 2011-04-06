@@ -12,13 +12,16 @@ public class Response {
 	
 	public boolean success() {
 		return 
-			statusCode == HttpURLConnection.HTTP_OK
-			|| statusCode == HttpURLConnection.HTTP_CREATED
-			|| statusCode == HttpURLConnection.HTTP_ACCEPTED
-			|| statusCode == HttpURLConnection.HTTP_NOT_AUTHORITATIVE
-			|| statusCode == HttpURLConnection.HTTP_NO_CONTENT
-			|| statusCode == HttpURLConnection.HTTP_RESET
-			|| statusCode == HttpURLConnection.HTTP_PARTIAL;
+			getStatusCode() == HttpURLConnection.HTTP_OK
+			|| getStatusCode() == HttpURLConnection.HTTP_CREATED
+			|| getStatusCode() == HttpURLConnection.HTTP_ACCEPTED
+			|| getStatusCode() == HttpURLConnection.HTTP_NOT_AUTHORITATIVE
+			|| getStatusCode() == HttpURLConnection.HTTP_NO_CONTENT
+			|| getStatusCode() == HttpURLConnection.HTTP_RESET
+			|| getStatusCode() == HttpURLConnection.HTTP_PARTIAL;
 	}
 
+	public int getStatusCode() {
+		return statusCode;
+	}
 }
