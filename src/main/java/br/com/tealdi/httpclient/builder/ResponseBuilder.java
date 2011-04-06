@@ -5,8 +5,8 @@ import br.com.tealdi.httpclient.Response;
 public class ResponseBuilder implements IResponseBuilder {
 
 	@Override
-	public Response buildWith(int httpStatusCode) {
-		return new Response(httpStatusCode);
+	public Response buildWith(int httpStatusCode, String body) {
+		return new Response(httpStatusCode, body);
 	}
 	
 }

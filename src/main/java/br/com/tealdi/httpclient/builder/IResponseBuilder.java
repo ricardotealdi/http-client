@@ -4,5 +4,5 @@ import br.com.tealdi.httpclient.Response;
 
 public interface IResponseBuilder {
 
-	public abstract Response buildWith(int httpStatusCode);
+	public abstract Response buildWith(int httpStatusCode, String body);
 }
