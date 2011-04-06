@@ -11,7 +11,14 @@ public class Response {
 	}
 	
 	public boolean success() {
-		return statusCode == HttpURLConnection.HTTP_OK;
+		return 
+			statusCode == HttpURLConnection.HTTP_OK
+			|| statusCode == HttpURLConnection.HTTP_CREATED
+			|| statusCode == HttpURLConnection.HTTP_ACCEPTED
+			|| statusCode == HttpURLConnection.HTTP_NOT_AUTHORITATIVE
+			|| statusCode == HttpURLConnection.HTTP_NO_CONTENT
+			|| statusCode == HttpURLConnection.HTTP_RESET
+			|| statusCode == HttpURLConnection.HTTP_PARTIAL;
 	}
 
 }
