@@ -1,12 +1,13 @@
 package br.com.tealdi.httpclient.builder;
 
+import br.com.tealdi.httpclient.Header;
 import br.com.tealdi.httpclient.Response;
 
 public class ResponseBuilder implements IResponseBuilder {
 
 	@Override
-	public Response buildWith(int httpStatusCode, String body) {
-		return new Response(httpStatusCode, body);
+	public Response buildWith(int httpStatusCode, String body, Header header) {
+		return new Response(httpStatusCode, body, header);
 	}
 	
 }
