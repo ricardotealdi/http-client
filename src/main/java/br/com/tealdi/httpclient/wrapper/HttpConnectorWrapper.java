@@ -3,10 +3,12 @@ package br.com.tealdi.httpclient.wrapper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Iterator;
 
 import br.com.tealdi.httpclient.Header;
@@ -30,12 +32,20 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 		connection.setRequestMethod(httpVerb);
 		
 		setRequestHeader(connection, request.getHeader());
-		setRequestBody(request.getBody(), connection);
+		Response response;
 		
-		Response response = readResponse(connection);
+		OutputStream output = getOutputStream(connection);
 		
-		connection.disconnect();
-		
+		if(output != null){
+			setRequestBody(request.getBody(), output);
+			
+			response = readResponse(connection);
+			
+			connection.disconnect();
+		} 
+		else {
+			response = builder.buildWith(HttpURLConnection.HTTP_BAD_GATEWAY, "", new Header());
+		}
 		return response;
 	}
 
@@ -78,10 +88,23 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 		return buffer.toString();
 	}
 	
-	private void setRequestBody(String body, HttpURLConnection connection)
-			throws IOException {
+	private OutputStream getOutputStream(HttpURLConnection connection) throws IOException {
+		OutputStream outputStream;
 		connection.setDoOutput(true);
-		OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+		
+		try {
+			outputStream = connection.getOutputStream();
+		}
+		catch(UnknownHostException ex) {
+			return null;
+		}
+		
+		return outputStream;
+	}
+	
+	private void setRequestBody(String body, OutputStream outputStream)
+			throws IOException {	
+		OutputStreamWriter out = new OutputStreamWriter(outputStream);
 		out.write(body);
 		out.close();
 	}
