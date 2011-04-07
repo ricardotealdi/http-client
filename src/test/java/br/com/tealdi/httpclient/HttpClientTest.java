@@ -3,9 +3,9 @@ package br.com.tealdi.httpclient;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -35,6 +35,7 @@ public class HttpClientTest {
 			.thenReturn(expectedResponse);
 	}
 	
+	
 	@Test
 	public void shouldRetrieveAResponseWhenDoingAGet() throws MalformedURLException, IOException {
 		Assert.assertEquals(expectedResponse, httpClient.doGet(requestToBeSent));
@@ -44,5 +45,38 @@ public class HttpClientTest {
 	public void shouldUseTheWrapperWhenDoingAGet() throws MalformedURLException, IOException {
 		httpClient.doGet(requestToBeSent);
 		verify(httpConnectorWrapperMocked, times(1)).connectTo(requestToBeSent, HttpVerb.GET);
+	}
+	
+	@Test
+	public void shouldRetrieveAResponseWhenDoingAPost() throws MalformedURLException, IOException {
+		Assert.assertEquals(expectedResponse, httpClient.doPost(requestToBeSent));
+	}
+	
+	@Test
+	public void shouldUseTheWrapperWhenDoingAPost() throws MalformedURLException, IOException {
+		httpClient.doPost(requestToBeSent);
+		verify(httpConnectorWrapperMocked, times(1)).connectTo(requestToBeSent, HttpVerb.POST);
+	}
+	
+	@Test
+	public void shouldRetrieveAResponseWhenDoingAPut() throws MalformedURLException, IOException {
+		Assert.assertEquals(expectedResponse, httpClient.doPut(requestToBeSent));
+	}
+	
+	@Test
+	public void shouldUseTheWrapperWhenDoingAPut() throws MalformedURLException, IOException {
+		httpClient.doPut(requestToBeSent);
+		verify(httpConnectorWrapperMocked, times(1)).connectTo(requestToBeSent, HttpVerb.PUT);
+	}
+	
+	@Test
+	public void shouldRetrieveAResponseWhenDoingADelete() throws MalformedURLException, IOException {
+		Assert.assertEquals(expectedResponse, httpClient.doDelete(requestToBeSent));
+	}
+	
+	@Test
+	public void shouldUseTheWrapperWhenDoingADelete() throws MalformedURLException, IOException {
+		httpClient.doDelete(requestToBeSent);
+		verify(httpConnectorWrapperMocked, times(1)).connectTo(requestToBeSent, HttpVerb.DELETE);
 	}
 }
