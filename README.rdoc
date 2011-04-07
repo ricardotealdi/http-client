@@ -1,0 +1,52 @@
+= http-client
+
+A simple http client for Java
+
+= Usage
+
+== A Get Request
+
+    IHttpClient httpClient = new HttpClient();
+    Response response = httpClient.doGet(new Request("your-uri"));
+
+== A Post Request
+
+    IHttpClient httpClient = new HttpClient();
+        
+    Header header = new Header();
+    header.add("Accept", "application/xml");
+    header.add("Content-Type", "application/xml");
+    
+    String body = "<a-xml-node></a-xml-node>";
+    
+    Request requestToBeSent = new Request("your-uri", body, header);
+    
+    Response response = httpClient.doPost(requestToBeSent);
+
+== A Put Request
+
+    IHttpClient httpClient = new HttpClient();
+        
+    Header header = new Header();
+    header.add("Accept", "application/xml");
+    header.add("Content-Type", "application/xml");
+    
+    String body = "<a-xml-node></a-xml-node>";
+    
+    Request requestToBeSent = new Request("your-uri", body, header);
+    
+    Response response = httpClient.doPut(requestToBeSent);
+    
+== A Delete Request
+
+    IHttpClient httpClient = new HttpClient();
+        
+    Header header = new Header();
+    header.add("Accept", "application/xml");
+    
+    Request requestToBeSent = new Request("your-uri", header);
+    
+    Response response = httpClient.doDelete(new Request("your-uri"));
+    
+    
+Feel free to send some feedback. Enjoy it! =D
