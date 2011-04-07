@@ -1,16 +1,15 @@
 package br.com.tealdi.httpclient.wrapper;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 import br.com.tealdi.httpclient.Header;
 import br.com.tealdi.httpclient.Request;
@@ -27,7 +26,20 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 	
 	@Override
 	public Response connectTo(Request request, String httpVerb) throws MalformedURLException, IOException {
+		URL url = new URL(request.getUri());
+		HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+		urlConnection.setDoOutput(true);
+		urlConnection.setDoInput(true);
+		urlConnection.setRequestMethod(httpVerb);
 		
+		setRequestHeader(urlConnection, request.getHeader());
+		setRequestBody(urlConnection, request.getBody());
+		
+		urlConnection.connect();
+		
+		return readResponse(urlConnection);
+	
+		/*System.setProperty("http.keepAlive", "FALSE");
 		HttpURLConnection connection = 
 			(HttpURLConnection) new URL(request.getUri()).openConnection();
 		connection.setRequestMethod(httpVerb);
@@ -59,7 +71,7 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 		
 		connection.disconnect();
 				
-		return response;
+		return response;*/
 	}
 
 	private Response readResponse(HttpURLConnection connection) throws IOException {
@@ -68,60 +80,53 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 		Header header = getHeader(connection);
 		String body = getBody(connection);
 		
+		connection.disconnect();
+		
 		return builder.buildWith(statusCode, body, header);
 	}
 	
-	private Header getHeader(HttpURLConnection connection) {
-		Iterator<String> iterator = connection.getHeaderFields().keySet().iterator();
+	private Header getHeader(HttpURLConnection urlConnection) {
+		Iterator<String> iterator = urlConnection.getHeaderFields().keySet().iterator();
 		
 		Header header = new Header();
 		
 		while(iterator.hasNext()) {
 			String headerKey = iterator.next();
-			String headerValue = connection.getHeaderField(headerKey);
+			String headerValue = urlConnection.getHeaderField(headerKey);
 			header.add(headerKey, headerValue);
 		}
 		
 		return header;
 	}
 	
-	private String getBody(HttpURLConnection connection, boolean success) throws IOException {
-		StringBuffer buffer = new StringBuffer();
-		String lineRetrieved = "";
-
-		InputStream inputStream;
-		if(success) {
-			inputStream = connection.getInputStream();
-		} else {
-			inputStream = connection.getErrorStream();
+	private String getBody(HttpURLConnection urlConnection) throws IOException {
+		StringBuilder builderForBody = new StringBuilder();
+		
+		InputStream output;
+		try {
+			output  = urlConnection.getInputStream();
+		} catch(IOException exception) {
+			output = urlConnection.getErrorStream();
 		}
 		
-		BufferedReader bufferedReader = 
-			new BufferedReader(new InputStreamReader(inputStream));
-
-		while ((lineRetrieved = bufferedReader.readLine()) != null)
-			buffer.append(lineRetrieved + "\r");
-
-		inputStream.close();
-		bufferedReader.close();
+		Scanner scanner = new Scanner(output);
 		
-		return lineRetrieved;
+		while(scanner.hasNextLine()) {
+			builderForBody.append(scanner.nextLine());
+			builderForBody.append("\r");
+		}
+		
+		output.close();
+		scanner.close();
+		
+		return builderForBody.toString();
 	}
 	
-	private String getErrorBody(HttpURLConnection connection) throws IOException {
-		return getBody(connection, false);
-	}
-	
-	private String getBody(HttpURLConnection connection) throws IOException {
-		return getBody(connection, true);
-	}
-	
-	private void setRequestBody(String body, OutputStream outputStream)
-			throws IOException {	
-		OutputStreamWriter outputStreamWritter = new OutputStreamWriter(outputStream);
-		outputStreamWritter.write(body);
-		outputStreamWritter.flush();
-		outputStreamWritter.close();
+	private void setRequestBody(HttpURLConnection urlConnection, String body)
+			throws IOException {
+		PrintWriter bodyStream = new PrintWriter(urlConnection.getOutputStream());
+		bodyStream.print(body);
+		bodyStream.close();
 	}
 
 	private void setRequestHeader(HttpURLConnection connection, Header header) {

@@ -14,6 +14,10 @@ public class Request {
 		this(uri, body, new Header());
 	}
 	
+	public Request(String uri, Header header) {
+		this(uri, "", header);
+	}
+	
 	public Request(String uri, String body, Header header) {
 		this.uri = uri;
 		this.body = body;
