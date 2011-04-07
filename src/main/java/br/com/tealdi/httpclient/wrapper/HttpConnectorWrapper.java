@@ -8,7 +8,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Iterator;
-import java.util.Map.Entry;
 
 import br.com.tealdi.httpclient.Header;
 import br.com.tealdi.httpclient.Request;
@@ -72,7 +71,7 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 			new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
 		while ((line = in.readLine()) != null)
-			buffer.append(line);
+			buffer.append(line + "\r");
 
 		in.close();
 		
