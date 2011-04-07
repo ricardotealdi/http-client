@@ -2,6 +2,7 @@ package br.com.tealdi.httpclient.wrapper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -30,22 +31,33 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 		HttpURLConnection connection = 
 			(HttpURLConnection) new URL(request.getUri()).openConnection();
 		connection.setRequestMethod(httpVerb);
+		connection.setDoInput(true);
+		connection.setDoOutput(true);
 		
 		setRequestHeader(connection, request.getHeader());
 		Response response;
 		
 		try {
-			connection.setDoOutput(true);
 			setRequestBody(request.getBody(), connection.getOutputStream());
 			
 			response = readResponse(connection);
 		} catch(UnknownHostException exception) {
-			response = builder.buildWith(HttpURLConnection.HTTP_BAD_GATEWAY, "", new Header());
+			response = 
+				builder
+					.buildWith(
+							HttpURLConnection.HTTP_BAD_GATEWAY, 
+							getErrorBody(connection), 
+							new Header());
 		} catch(IOException exception) {
-			response = builder.buildWith(connection.getResponseCode(), "", new Header());
+			response = 
+				builder
+					.buildWith(
+							connection.getResponseCode(), 
+							getErrorBody(connection), 
+							new Header());
 		}
 		
-		//readResponse(connection)
+		connection.disconnect();
 				
 		return response;
 	}
@@ -73,27 +85,43 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 		return header;
 	}
 	
-	private String getBody(HttpURLConnection connection) throws IOException {
-		
+	private String getBody(HttpURLConnection connection, boolean success) throws IOException {
 		StringBuffer buffer = new StringBuffer();
-		String line = "";
+		String lineRetrieved = "";
 
-		BufferedReader in = 
-			new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-		while ((line = in.readLine()) != null)
-			buffer.append(line + "\r");
-
-		in.close();
+		InputStream inputStream;
+		if(success) {
+			inputStream = connection.getInputStream();
+		} else {
+			inputStream = connection.getErrorStream();
+		}
 		
-		return buffer.toString();
+		BufferedReader bufferedReader = 
+			new BufferedReader(new InputStreamReader(inputStream));
+
+		while ((lineRetrieved = bufferedReader.readLine()) != null)
+			buffer.append(lineRetrieved + "\r");
+
+		inputStream.close();
+		bufferedReader.close();
+		
+		return lineRetrieved;
+	}
+	
+	private String getErrorBody(HttpURLConnection connection) throws IOException {
+		return getBody(connection, false);
+	}
+	
+	private String getBody(HttpURLConnection connection) throws IOException {
+		return getBody(connection, true);
 	}
 	
 	private void setRequestBody(String body, OutputStream outputStream)
 			throws IOException {	
-		OutputStreamWriter out = new OutputStreamWriter(outputStream);
-		out.write(body);
-		out.close();
+		OutputStreamWriter outputStreamWritter = new OutputStreamWriter(outputStream);
+		outputStreamWritter.write(body);
+		outputStreamWritter.flush();
+		outputStreamWritter.close();
 	}
 
 	private void setRequestHeader(HttpURLConnection connection, Header header) {
