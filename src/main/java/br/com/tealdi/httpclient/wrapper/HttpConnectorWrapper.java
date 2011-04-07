@@ -12,14 +12,17 @@ import java.util.Scanner;
 import br.com.tealdi.httpclient.Header;
 import br.com.tealdi.httpclient.Request;
 import br.com.tealdi.httpclient.Response;
+import br.com.tealdi.httpclient.ServiceForHttpVerb;
 import br.com.tealdi.httpclient.builder.Builder;
 
 public class HttpConnectorWrapper implements ConnectorWrapper {
 
 	private final Builder builder;
+	private final ServiceForHttpVerb verbService;
 
-	public HttpConnectorWrapper(Builder builder) {
+	public HttpConnectorWrapper(Builder builder, ServiceForHttpVerb verbService) {
 		this.builder = builder;
+		this.verbService = verbService;
 	}
 	
 	@Override
@@ -31,8 +34,9 @@ public class HttpConnectorWrapper implements ConnectorWrapper {
 		urlConnection.setRequestMethod(httpVerb);
 		
 		setRequestHeader(urlConnection, request.getHeader());
-		setRequestBody(urlConnection, request.getBody());
-		
+		if(verbService.requestBodyIsAllowedFor(httpVerb)) {
+			setRequestBody(urlConnection, request.getBody());
+		}
 		urlConnection.connect();
 		
 		return readResponse(urlConnection);

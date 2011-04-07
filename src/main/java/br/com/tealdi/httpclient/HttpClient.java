@@ -12,7 +12,9 @@ public class HttpClient implements RequestClient {
 	private final ConnectorWrapper connector;
 
 	public HttpClient() {
-		this(new HttpConnectorWrapper(new ResponseBuilder()));
+		this(new HttpConnectorWrapper(
+				new ResponseBuilder(), 
+				new HttpVerbService()));
 	}
 	
 	public HttpClient(ConnectorWrapper connector) {

@@ -1,5 +1,6 @@
 package br.com.tealdi.httpclient;
 
+
 public class HttpVerb {
 
 	public final static String GET = "GET";

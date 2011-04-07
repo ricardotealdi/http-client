@@ -35,7 +35,6 @@ public class HttpClientTest {
 			.thenReturn(expectedResponse);
 	}
 	
-	
 	@Test
 	public void shouldRetrieveAResponseWhenDoingAGet() throws MalformedURLException, IOException {
 		Assert.assertEquals(expectedResponse, httpClient.doGet(requestToBeSent));
