@@ -6,12 +6,12 @@ A simple http client for Java
 
 == A Get Request
 
-    IHttpClient httpClient = new HttpClient();
+    RequestClient httpClient = new HttpClient();
     Response response = httpClient.doGet(new Request("your-uri"));
 
 == A Post Request
 
-    IHttpClient httpClient = new HttpClient();
+    RequestClient httpClient = new HttpClient();
         
     Header header = new Header();
     header.add("Accept", "application/xml");
@@ -25,7 +25,7 @@ A simple http client for Java
 
 == A Put Request
 
-    IHttpClient httpClient = new HttpClient();
+    RequestClient httpClient = new HttpClient();
         
     Header header = new Header();
     header.add("Accept", "application/xml");
@@ -39,7 +39,7 @@ A simple http client for Java
     
 == A Delete Request
 
-    IHttpClient httpClient = new HttpClient();
+    RequestClient httpClient = new HttpClient();
         
     Header header = new Header();
     header.add("Accept", "application/xml");
