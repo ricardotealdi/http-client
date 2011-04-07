@@ -38,40 +38,6 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 		urlConnection.connect();
 		
 		return readResponse(urlConnection);
-	
-		/*System.setProperty("http.keepAlive", "FALSE");
-		HttpURLConnection connection = 
-			(HttpURLConnection) new URL(request.getUri()).openConnection();
-		connection.setRequestMethod(httpVerb);
-		connection.setDoInput(true);
-		connection.setDoOutput(true);
-		
-		setRequestHeader(connection, request.getHeader());
-		Response response;
-		
-		try {
-			setRequestBody(request.getBody(), connection.getOutputStream());
-			
-			response = readResponse(connection);
-		} catch(UnknownHostException exception) {
-			response = 
-				builder
-					.buildWith(
-							HttpURLConnection.HTTP_BAD_GATEWAY, 
-							getErrorBody(connection), 
-							new Header());
-		} catch(IOException exception) {
-			response = 
-				builder
-					.buildWith(
-							connection.getResponseCode(), 
-							getErrorBody(connection), 
-							new Header());
-		}
-		
-		connection.disconnect();
-				
-		return response;*/
 	}
 
 	private Response readResponse(HttpURLConnection connection) throws IOException {
