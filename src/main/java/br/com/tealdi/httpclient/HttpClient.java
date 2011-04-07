@@ -7,15 +7,15 @@ import br.com.tealdi.httpclient.wrapper.IHttpConnectorWrapper;
 
 public class HttpClient implements IHttpClient {
 
-	private final IHttpConnectorWrapper httpConnectorWrapperMocked;
+	private final IHttpConnectorWrapper connector;
 
-	public HttpClient(IHttpConnectorWrapper httpConnectorWrapperMocked) {
-		this.httpConnectorWrapperMocked = httpConnectorWrapperMocked;
+	public HttpClient(IHttpConnectorWrapper connector) {
+		this.connector = connector;
 	}
 
 	@Override
 	public Response doGet(Request request) throws MalformedURLException, IOException {
-		return httpConnectorWrapperMocked.connectTo(request, HttpVerb.GET);
+		return connector.connectTo(request, HttpVerb.GET);
 	}
 
 }

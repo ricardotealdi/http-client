@@ -11,11 +11,11 @@ public class Header {
 	}
 	
 	public void add(String key, String value) {
-		getHeaders().put(key, value);
+		headers.put(key, value);
 	}
 	
 	public String get(String key) {
-		return getHeaders().get(key);
+		return headers.get(key);
 	}
 
 	public HashMap<String, String> getHeaders() {
