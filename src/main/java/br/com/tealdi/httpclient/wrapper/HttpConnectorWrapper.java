@@ -34,18 +34,19 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 		setRequestHeader(connection, request.getHeader());
 		Response response;
 		
-		OutputStream output = getOutputStream(connection);
-		
-		if(output != null){
-			setRequestBody(request.getBody(), output);
+		try {
+			connection.setDoOutput(true);
+			setRequestBody(request.getBody(), connection.getOutputStream());
 			
 			response = readResponse(connection);
-			
-			connection.disconnect();
-		} 
-		else {
+		} catch(UnknownHostException exception) {
 			response = builder.buildWith(HttpURLConnection.HTTP_BAD_GATEWAY, "", new Header());
+		} catch(IOException exception) {
+			response = builder.buildWith(connection.getResponseCode(), "", new Header());
 		}
+		
+		//readResponse(connection)
+				
 		return response;
 	}
 
@@ -86,20 +87,6 @@ public class HttpConnectorWrapper implements IHttpConnectorWrapper {
 		in.close();
 		
 		return buffer.toString();
-	}
-	
-	private OutputStream getOutputStream(HttpURLConnection connection) throws IOException {
-		OutputStream outputStream;
-		connection.setDoOutput(true);
-		
-		try {
-			outputStream = connection.getOutputStream();
-		}
-		catch(UnknownHostException ex) {
-			return null;
-		}
-		
-		return outputStream;
 	}
 	
 	private void setRequestBody(String body, OutputStream outputStream)
