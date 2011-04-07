@@ -12,13 +12,13 @@ import java.util.Scanner;
 import br.com.tealdi.httpclient.Header;
 import br.com.tealdi.httpclient.Request;
 import br.com.tealdi.httpclient.Response;
-import br.com.tealdi.httpclient.builder.IResponseBuilder;
+import br.com.tealdi.httpclient.builder.Builder;
 
-public class HttpConnectorWrapper implements IHttpConnectorWrapper {
+public class HttpConnectorWrapper implements ConnectorWrapper {
 
-	private final IResponseBuilder builder;
+	private final Builder builder;
 
-	public HttpConnectorWrapper(IResponseBuilder builder) {
+	public HttpConnectorWrapper(Builder builder) {
 		this.builder = builder;
 	}
 	

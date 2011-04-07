@@ -5,17 +5,17 @@ import java.net.MalformedURLException;
 
 import br.com.tealdi.httpclient.builder.ResponseBuilder;
 import br.com.tealdi.httpclient.wrapper.HttpConnectorWrapper;
-import br.com.tealdi.httpclient.wrapper.IHttpConnectorWrapper;
+import br.com.tealdi.httpclient.wrapper.ConnectorWrapper;
 
-public class HttpClient implements IHttpClient {
+public class HttpClient implements RequestClient {
 
-	private final IHttpConnectorWrapper connector;
+	private final ConnectorWrapper connector;
 
 	public HttpClient() {
 		this(new HttpConnectorWrapper(new ResponseBuilder()));
 	}
 	
-	public HttpClient(IHttpConnectorWrapper connector) {
+	public HttpClient(ConnectorWrapper connector) {
 		this.connector = connector;
 	}
 

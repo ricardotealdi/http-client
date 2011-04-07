@@ -3,7 +3,7 @@ package br.com.tealdi.httpclient.builder;
 import br.com.tealdi.httpclient.Header;
 import br.com.tealdi.httpclient.Response;
 
-public class ResponseBuilder implements IResponseBuilder {
+public class ResponseBuilder implements Builder {
 
 	@Override
 	public Response buildWith(int httpStatusCode, String body, Header header) {

@@ -6,6 +6,6 @@ import java.net.MalformedURLException;
 import br.com.tealdi.httpclient.Request;
 import br.com.tealdi.httpclient.Response;
 
-public interface IHttpConnectorWrapper {
+public interface ConnectorWrapper {
 	public abstract Response connectTo(Request request, String httpVerb) throws MalformedURLException, IOException;
 }
