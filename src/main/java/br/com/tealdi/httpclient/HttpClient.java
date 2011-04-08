@@ -4,20 +4,22 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import br.com.tealdi.httpclient.builder.ResponseBuilder;
-import br.com.tealdi.httpclient.wrapper.HttpConnectorWrapper;
-import br.com.tealdi.httpclient.wrapper.ConnectorWrapper;
+import br.com.tealdi.httpclient.service.ConnectionService;
+import br.com.tealdi.httpclient.service.HttpConnectionService;
+import br.com.tealdi.httpclient.wrapper.HttpConnectionWrapper;
 
 public class HttpClient implements RequestClient {
 
-	private final ConnectorWrapper connector;
+	private final ConnectionService connector;
 
 	public HttpClient() {
-		this(new HttpConnectorWrapper(
+		this(new HttpConnectionService(
+				new HttpConnectionWrapper(),
 				new ResponseBuilder(), 
 				new HttpVerbService()));
 	}
 	
-	public HttpClient(ConnectorWrapper connector) {
+	public HttpClient(ConnectionService connector) {
 		this.connector = connector;
 	}
 

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Iterator;
@@ -16,10 +15,8 @@ public class HttpConnectionWrapper implements ConnectionWrapper {
 
 	private HttpURLConnection connection;
 	
-	public HttpConnectionWrapper(String uri) throws MalformedURLException, IOException {
-		connection = (HttpURLConnection) new URL(uri).openConnection();
-		connection.setDoOutput(true);
-		connection.setDoInput(true);
+	public HttpConnectionWrapper() {
+		
 	}
 	
 	@Override
@@ -93,5 +90,17 @@ public class HttpConnectionWrapper implements ConnectionWrapper {
 		scanner.close();
 		
 		return builderForBody.toString();
+	}
+
+	@Override
+	public void disconnect() {
+		connection.disconnect();
+	}
+
+	@Override
+	public void setUri(String uri) throws IOException {
+		connection = (HttpURLConnection) new URL(uri).openConnection();
+		connection.setDoOutput(true);
+		connection.setDoInput(true);
 	}
 }

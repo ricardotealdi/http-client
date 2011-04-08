@@ -1,4 +1,4 @@
-package br.com.tealdi.httpclient.wrapper;
+package br.com.tealdi.httpclient.service;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -6,6 +6,6 @@ import java.net.MalformedURLException;
 import br.com.tealdi.httpclient.Request;
 import br.com.tealdi.httpclient.Response;
 
-public interface ConnectorWrapper {
+public interface ConnectionService {
 	public abstract Response sendTo(Request request, String httpVerb) throws MalformedURLException, IOException;
 }

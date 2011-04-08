@@ -16,18 +16,18 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.tealdi.httpclient.wrapper.ConnectorWrapper;
+import br.com.tealdi.httpclient.service.ConnectionService;
 
 public class HttpClientTest {
 
-	private ConnectorWrapper httpConnectorWrapperMocked;
+	private ConnectionService httpConnectorWrapperMocked;
 	private HttpClient httpClient;
 	private Request requestToBeSent;
 	private Response expectedResponse;
 
 	@Before
 	public void setUp() throws MalformedURLException, IOException {
-		httpConnectorWrapperMocked = mock(ConnectorWrapper.class);
+		httpConnectorWrapperMocked = mock(ConnectionService.class);
 		httpClient = new HttpClient(httpConnectorWrapperMocked);
 		requestToBeSent = new Request("uri");
 		expectedResponse = new Response(HttpURLConnection.HTTP_OK, "body", new Header());

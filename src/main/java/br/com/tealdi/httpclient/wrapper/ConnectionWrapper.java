@@ -7,6 +7,8 @@ import br.com.tealdi.httpclient.Header;
 
 public interface ConnectionWrapper {
 
+	public abstract void setUri(String uri) throws IOException;
+	
 	public abstract void setRequestMethod(String verb) throws ProtocolException;
 
 	public abstract void setRequestHeader(Header header);
@@ -20,5 +22,7 @@ public interface ConnectionWrapper {
 	public abstract Header getResponseHeader() throws IOException;
 
 	public abstract String getResponseBody() throws IOException;
+	
+	public abstract void disconnect();
 
 }
