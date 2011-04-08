@@ -4,12 +4,25 @@ A simple http client for Java
 
 = Usage
 
-== A Get Request
+== Creating a Request using the builder
+
+    Request request = 
+        new ResponseBuilder()
+            .withUri("your-uri")
+            .withHeaderProperty("Accept", "application/xml")
+            .withHeaderProperty("Content-Type", "application/xml")
+            .withBody("body-to-be-sent")
+            .instance();
+
+== Using the http client to send your request
+
+
+=== A Get Request
 
     RequestClient httpClient = new HttpClient();
-    Response response = httpClient.doGet(new Request("your-uri"));
+    Response response = httpClient.doGet(new Request("your-uri")); // you can also use the RequestBuilder
 
-== A Post Request
+=== A Post Request
 
     RequestClient httpClient = new HttpClient();
         
@@ -19,11 +32,11 @@ A simple http client for Java
     
     String body = "<a-xml-node></a-xml-node>";
     
-    Request requestToBeSent = new Request("your-uri", body, header);
+    Request requestToBeSent = new Request("your-uri", body, header); // you can also use the RequestBuilder
     
     Response response = httpClient.doPost(requestToBeSent);
 
-== A Put Request
+=== A Put Request
 
     RequestClient httpClient = new HttpClient();
         
@@ -33,11 +46,11 @@ A simple http client for Java
     
     String body = "<a-xml-node></a-xml-node>";
     
-    Request requestToBeSent = new Request("your-uri", body, header);
+    Request requestToBeSent = new Request("your-uri", body, header); // you can also use the RequestBuilder
     
     Response response = httpClient.doPut(requestToBeSent);
     
-== A Delete Request
+=== A Delete Request
 
     RequestClient httpClient = new HttpClient();
         
@@ -46,7 +59,7 @@ A simple http client for Java
     
     Request requestToBeSent = new Request("your-uri", header);
     
-    Response response = httpClient.doDelete(new Request("your-uri"));
+    Response response = httpClient.doDelete(new Request("your-uri")); // you can also use the RequestBuilder
     
     
 Feel free to send some feedback. Enjoy it! =D
