@@ -23,25 +23,25 @@ public class HttpClient implements RequestClient {
 
 	@Override
 	public Response doGet(Request request) throws MalformedURLException, IOException {
-		return connector.connectTo(request, HttpVerb.GET);
+		return connector.sendTo(request, HttpVerb.GET);
 	}
 
 	@Override
 	public Response doPost(Request request) throws MalformedURLException,
 			IOException {
-		return connector.connectTo(request, HttpVerb.POST);
+		return connector.sendTo(request, HttpVerb.POST);
 	}
 
 	@Override
 	public Response doDelete(Request request) throws MalformedURLException,
 			IOException {
-		return connector.connectTo(request, HttpVerb.DELETE);
+		return connector.sendTo(request, HttpVerb.DELETE);
 	}
 	
 	@Override
 	public Response doPut(Request request) throws MalformedURLException,
 	IOException {
-		return connector.connectTo(request, HttpVerb.PUT);
+		return connector.sendTo(request, HttpVerb.PUT);
 	}
 
 }

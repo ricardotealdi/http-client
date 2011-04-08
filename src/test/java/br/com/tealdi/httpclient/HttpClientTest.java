@@ -31,7 +31,7 @@ public class HttpClientTest {
 		httpClient = new HttpClient(httpConnectorWrapperMocked);
 		requestToBeSent = new Request("uri");
 		expectedResponse = new Response(HttpURLConnection.HTTP_OK, "body", new Header());
-		when(httpConnectorWrapperMocked.connectTo(isA(Request.class), anyString()))
+		when(httpConnectorWrapperMocked.sendTo(isA(Request.class), anyString()))
 			.thenReturn(expectedResponse);
 	}
 	
@@ -43,7 +43,7 @@ public class HttpClientTest {
 	@Test
 	public void shouldUseTheWrapperWhenDoingAGet() throws MalformedURLException, IOException {
 		httpClient.doGet(requestToBeSent);
-		verify(httpConnectorWrapperMocked, times(1)).connectTo(requestToBeSent, HttpVerb.GET);
+		verify(httpConnectorWrapperMocked, times(1)).sendTo(requestToBeSent, HttpVerb.GET);
 	}
 	
 	@Test
@@ -54,7 +54,7 @@ public class HttpClientTest {
 	@Test
 	public void shouldUseTheWrapperWhenDoingAPost() throws MalformedURLException, IOException {
 		httpClient.doPost(requestToBeSent);
-		verify(httpConnectorWrapperMocked, times(1)).connectTo(requestToBeSent, HttpVerb.POST);
+		verify(httpConnectorWrapperMocked, times(1)).sendTo(requestToBeSent, HttpVerb.POST);
 	}
 	
 	@Test
@@ -65,7 +65,7 @@ public class HttpClientTest {
 	@Test
 	public void shouldUseTheWrapperWhenDoingAPut() throws MalformedURLException, IOException {
 		httpClient.doPut(requestToBeSent);
-		verify(httpConnectorWrapperMocked, times(1)).connectTo(requestToBeSent, HttpVerb.PUT);
+		verify(httpConnectorWrapperMocked, times(1)).sendTo(requestToBeSent, HttpVerb.PUT);
 	}
 	
 	@Test
@@ -76,6 +76,6 @@ public class HttpClientTest {
 	@Test
 	public void shouldUseTheWrapperWhenDoingADelete() throws MalformedURLException, IOException {
 		httpClient.doDelete(requestToBeSent);
-		verify(httpConnectorWrapperMocked, times(1)).connectTo(requestToBeSent, HttpVerb.DELETE);
+		verify(httpConnectorWrapperMocked, times(1)).sendTo(requestToBeSent, HttpVerb.DELETE);
 	}
 }

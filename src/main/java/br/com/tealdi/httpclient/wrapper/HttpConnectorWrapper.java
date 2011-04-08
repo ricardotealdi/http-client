@@ -26,7 +26,7 @@ public class HttpConnectorWrapper implements ConnectorWrapper {
 	}
 	
 	@Override
-	public Response connectTo(Request request, String httpVerb) throws MalformedURLException, IOException {
+	public Response sendTo(Request request, String httpVerb) throws MalformedURLException, IOException {
 		URL url = new URL(request.getUri());
 		HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 		urlConnection.setDoOutput(true);

@@ -7,5 +7,5 @@ import br.com.tealdi.httpclient.Request;
 import br.com.tealdi.httpclient.Response;
 
 public interface ConnectorWrapper {
-	public abstract Response connectTo(Request request, String httpVerb) throws MalformedURLException, IOException;
+	public abstract Response sendTo(Request request, String httpVerb) throws MalformedURLException, IOException;
 }
