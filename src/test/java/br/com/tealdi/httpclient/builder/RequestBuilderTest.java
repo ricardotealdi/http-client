@@ -10,7 +10,7 @@ import br.com.tealdi.httpclient.Request;
 
 public class RequestBuilderTest {
 	
-	private RequestBuilder builder;
+	private ABuilderForRequest builder;
 
 	@Before
 	public void setUp() {

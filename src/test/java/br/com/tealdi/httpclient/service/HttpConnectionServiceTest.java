@@ -19,13 +19,13 @@ import br.com.tealdi.httpclient.Header;
 import br.com.tealdi.httpclient.Request;
 import br.com.tealdi.httpclient.Response;
 import br.com.tealdi.httpclient.ServiceForHttpVerb;
-import br.com.tealdi.httpclient.builder.Builder;
+import br.com.tealdi.httpclient.builder.ABuilderForResponse;
 import br.com.tealdi.httpclient.wrapper.ConnectionWrapper;
 
 public class HttpConnectionServiceTest {
 	
 	private ConnectionWrapper wrapper;
-	private Builder builder;
+	private ABuilderForResponse builder;
 	private HttpConnectionService service;
 	private ServiceForHttpVerb verbService;
 	private String uri;
@@ -38,7 +38,7 @@ public class HttpConnectionServiceTest {
 	@Before
 	public void setUp() throws IOException {
 		wrapper = mock(ConnectionWrapper.class);
-		builder = mock(Builder.class);
+		builder = mock(ABuilderForResponse.class);
 		verbService = mock(ServiceForHttpVerb.class);
 		
 		responseHeader = new Header();

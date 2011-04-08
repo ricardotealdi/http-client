@@ -19,7 +19,7 @@ public class ResponseBuilderTest {
 		header = new Header();
 		header.add("Content-Type", "text/plain");
 		
-		Builder builder = new ResponseBuilder();
+		ABuilderForResponse builder = new ResponseBuilder();
 		Response response = builder.buildWith(statusCode, body, header);
 		
 		Assert.assertEquals(statusCode, response.getStatusCode());

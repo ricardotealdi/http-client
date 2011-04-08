@@ -6,18 +6,18 @@ import java.net.MalformedURLException;
 import br.com.tealdi.httpclient.Request;
 import br.com.tealdi.httpclient.Response;
 import br.com.tealdi.httpclient.ServiceForHttpVerb;
-import br.com.tealdi.httpclient.builder.Builder;
+import br.com.tealdi.httpclient.builder.ABuilderForResponse;
 import br.com.tealdi.httpclient.wrapper.ConnectionWrapper;
 
 public class HttpConnectionService implements ConnectionService {
 
-	private final Builder builder;
+	private final ABuilderForResponse builder;
 	private final ServiceForHttpVerb verbService;
 	private final ConnectionWrapper wrapper;
 	
 	public HttpConnectionService(
 			ConnectionWrapper wrapper, 
-			Builder builder,
+			ABuilderForResponse builder,
 			ServiceForHttpVerb verbService) {
 				this.wrapper = wrapper;
 				this.builder = builder;

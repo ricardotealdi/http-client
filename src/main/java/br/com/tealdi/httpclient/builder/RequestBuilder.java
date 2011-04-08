@@ -3,7 +3,7 @@ package br.com.tealdi.httpclient.builder;
 import br.com.tealdi.httpclient.Header;
 import br.com.tealdi.httpclient.Request;
 
-public class RequestBuilder {
+public class RequestBuilder implements ABuilderForRequest {
 	private String uri;
 	private Header header;
 	private String body;
@@ -14,26 +14,31 @@ public class RequestBuilder {
 		body = "";
 	}
 	
-	public RequestBuilder withUri(String uri) {
+	@Override
+	public ABuilderForRequest withUri(String uri) {
 		this.uri = uri;
 		return this;
 	}
 	
-	public RequestBuilder withBody(String body) {
+	@Override
+	public ABuilderForRequest withBody(String body) {
 		this.body = body;
 		return this;
 	}
 	
-	public RequestBuilder withHeaderProperty(String headerPropertyName, String headerPropertyValue) {
+	@Override
+	public ABuilderForRequest withHeaderProperty(String headerPropertyName, String headerPropertyValue) {
 		this.header.add(headerPropertyName, headerPropertyValue);
 		return this;
 	}
 	
-	public RequestBuilder withHeader(Header header) {
+	@Override
+	public ABuilderForRequest withHeader(Header header) {
 		this.header = header;
 		return this;
 	}
 	
+	@Override
 	public Request instance() {
 		return new Request(uri, body, header);
 	}
