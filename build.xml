@@ -1,0 +1,62 @@
+<project name="httpclient" basedir=".">
+
+	<property file="build.properties" />
+
+	<path id="test.class.path">
+		<pathelement location="${lib.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<target name="clean">
+		<delete includeemptydirs="true" verbose="true" failonerror="false">
+			<fileset dir="${temp.dir}" includes="**/*"/>
+		</delete>
+	</target>
+
+	<target name="prepare" depends="clean">
+		<mkdir dir="${package.dir}" />
+		<mkdir dir="${temp.dir}" />
+		<mkdir dir="${temp.dir.classes}" />
+		<mkdir dir="${temp.dir.tests.unit}" />
+		<mkdir dir="${temp.dir.tests.unit.classes}" />
+	</target>
+
+	<target name="compile" depends="prepare">
+		<javac debug="on" srcdir="${src.dir}" destdir="${temp.dir.classes}" includes="**/*" />
+	</target>
+	
+	<target name="compile-unit-tests" depends="compile">
+		<javac debug="on" srcdir="${src.tests.unit.dir}" destdir="${temp.dir.tests.unit.classes}" includes="**/*">
+			<classpath>
+				<pathelement path="${temp.dir.classes}" />
+			</classpath>
+			<classpath refid="test.class.path" />
+		</javac>
+	</target>
+	
+	<target name="run-unit-tests" depends="compile-unit-tests">
+		<junit tempdir="${temp.dir}" printsummary="true" showoutput="false" failureproperty="failed-test">
+			<classpath>
+				<pathelement path="${temp.dir.classes}" />
+				<pathelement path="${temp.dir.tests.unit.classes}" />
+			</classpath>
+			<classpath refid="test.class.path" />
+			
+			<formatter type="brief" usefile="false" />
+			
+			<batchtest>
+				<fileset dir="${temp.dir.tests.unit.classes}" includes="**/*Test.class" />
+			</batchtest>
+		</junit>
+		<fail if="failed-test" message="Failing tests" />
+	</target>
+	
+	<target name="generate-jar" depends="run-unit-tests">
+		<jar destfile="${package.file}" 
+			basedir="${temp.dir.classes}" 
+			excludes="**/*Test.class" />
+	</target>
+
+</project>

@@ -3,3 +3,6 @@
 Servers
 bin
 target
+package
+temp
+TEST-*
