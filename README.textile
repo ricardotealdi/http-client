@@ -1,64 +1,65 @@
 h1. http-client
 
-A simple http client for Java
+p. A simple http client for Java
 
 h1. Usage
 
 h2. Creating a Request using the builder
 
-@Request request =@
-    @new RequestBuilder()@
-        @.forThis("your-uri")@
-        @.withHeaderProperty("Accept", "application/xml")@
-        @.withHeaderProperty("Content-Type", "application/xml")@
-        @.withBody("body-to-be-sent")@
-        @.instance();@
+bc.. Request request =
+    new RequestBuilder()
+        .forThis("your-uri")
+        .withHeaderProperty("Accept", "application/xml")
+        .withHeaderProperty("Content-Type", "application/xml")
+        .withBody("body-to-be-sent")
+        .instance();
 
 h2. Using the http client to send your request
 
 
-h3. A Get Request
+h3. A GET request
 
-@Response response = 
+bc.. Response response = 
     new HttpClient()
         .doGet(
             new RequestBuilder()
                 .forThis("your-uri")
-                .instance());@
+                .instance());
 
-h3. A Post Request
+h3. A POST request
 
-@Response response =@
-    @new HttpClient()@
-        @.doPost(@
-            @new RequestBuilder()@
-                @.forThis("your-uri")@
-                @.withHeaderProperty("Accept", "application/xml")@
-                @.withHeaderProperty("Content-Type", "application/xml")@
-                @.withBody("body")@
-                @.instance());@
+bc.. Response response =
+    new HttpClient()
+        .doPost(
+            new RequestBuilder()
+                .forThis("your-uri")
+                .withHeaderProperty("Accept", "application/xml")
+                .withHeaderProperty("Content-Type", "application/xml")
+                .withBody("body")
+                .instance());
 
-h3. A Put Request
+h3. A PUT request
 
-@Response response =@
-    @new HttpClient()@
-        @.doPut(@
-            @new RequestBuilder()@
-                @.forThis("your-uri")@
-                @.withHeaderProperty("Accept", "application/xml")@
-                @.withHeaderProperty("Content-Type", "application/xml")@
-                @.withBody("body")@
-                @.instance());@
+bc.. Response response =
+    new HttpClient()
+        .doPut(
+            new RequestBuilder()
+                .forThis("your-uri")
+                .withHeaderProperty("Accept", "application/xml")
+                .withHeaderProperty("Content-Type", "application/xml")
+                .withBody("body")
+                .instance());
     
-h3. A Delete Request
+h3. A DELETE request
 
-@Response response =@
-    @new HttpClient()@
-        @.doDelete(@
-            @new RequestBuilder()@
-                @.forThis("your-uri")@
-                @.withHeaderProperty("Accept", "application/xml")@
-                @.instance());@
+bc.. Response response =
+    new HttpClient()
+        .doDelete(
+            new RequestBuilder()
+                .forThis("your-uri")
+                .withHeaderProperty("Accept", "application/xml")
+                .instance());
     
+h1. Any feedback?
     
-Feel free to send some feedback. Enjoy it! =D
+p. Feel free to send some feedback. Enjoy it! =D
