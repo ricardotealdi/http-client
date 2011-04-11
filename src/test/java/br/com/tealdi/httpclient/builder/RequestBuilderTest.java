@@ -21,7 +21,7 @@ public class RequestBuilderTest {
 	public void shouldCreateARequestWithAUri() {
 		String uri = "any-uri";
 		
-		Request request = builder.withUri(uri).instance();
+		Request request = builder.forThis(uri).instance();
 		
 		Assert.assertEquals(uri, request.getUri());
 	}

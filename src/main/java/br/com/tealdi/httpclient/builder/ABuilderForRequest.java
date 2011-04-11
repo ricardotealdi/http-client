@@ -5,7 +5,7 @@ import br.com.tealdi.httpclient.Request;
 
 public interface ABuilderForRequest {
 
-	public abstract ABuilderForRequest withUri(String uri);
+	public abstract ABuilderForRequest forThis(String uri);
 
 	public abstract ABuilderForRequest withBody(String body);
 

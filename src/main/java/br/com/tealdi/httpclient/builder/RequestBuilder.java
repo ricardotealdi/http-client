@@ -15,7 +15,7 @@ public class RequestBuilder implements ABuilderForRequest {
 	}
 	
 	@Override
-	public ABuilderForRequest withUri(String uri) {
+	public ABuilderForRequest forThis(String uri) {
 		this.uri = uri;
 		return this;
 	}
