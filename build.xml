@@ -54,7 +54,11 @@
 	</target>
 	
 	<target name="generate-jar" depends="run-unit-tests">
-		<jar destfile="${package.file}" 
+		<tstamp>
+			<format property="package.name.with.timestamp" pattern="'${package.file}-'yyyyMMddHHmmss'.jar'" />
+		</tstamp>
+
+		<jar destfile="${package.name.with.timestamp}" 
 			basedir="${temp.dir.classes}" 
 			excludes="**/*Test.class" />
 	</target>
