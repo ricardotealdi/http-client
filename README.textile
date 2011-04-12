@@ -9,6 +9,7 @@ h2. Creating a Request using the builder
 bc.. Request request =
     new RequestBuilder()
         .forThis("your-uri")
+        .withCharsetEncoding("UTF-8") // the default value for charset encoding is UTF-8
         .withHeaderProperty("Accept", "application/xml")
         .withHeaderProperty("Content-Type", "application/xml")
         .withBody("body-to-be-sent")
