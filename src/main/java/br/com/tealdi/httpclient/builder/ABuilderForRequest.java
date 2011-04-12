@@ -16,4 +16,7 @@ public interface ABuilderForRequest {
 
 	public abstract Request instance();
 
+	public abstract ABuilderForRequest withCharsetEncoding(
+			String charsetEncoding);
+
 }

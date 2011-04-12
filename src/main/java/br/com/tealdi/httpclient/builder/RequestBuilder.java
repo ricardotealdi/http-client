@@ -7,11 +7,13 @@ public class RequestBuilder implements ABuilderForRequest {
 	private String uri;
 	private Header header;
 	private String body;
+	private String charsetEncoding;
 	
 	public RequestBuilder() {
 		uri = "";
 		header = new Header();
 		body = "";
+		charsetEncoding = "";
 	}
 	
 	@Override
@@ -40,6 +42,12 @@ public class RequestBuilder implements ABuilderForRequest {
 	
 	@Override
 	public Request instance() {
-		return new Request(uri, body, header);
+		return new Request(uri, body, header, charsetEncoding);
+	}
+
+	@Override
+	public ABuilderForRequest withCharsetEncoding(String charsetEncoding) {
+		this.charsetEncoding = charsetEncoding;
+		return this;
 	}
 }

@@ -2,18 +2,19 @@ package br.com.tealdi.httpclient.wrapper;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import br.com.tealdi.httpclient.Header;
 
 public class HttpConnectionWrapper implements ConnectionWrapper {
 
 	private HttpURLConnection connection;
+	private String charsetEncoding;
 	
 	public HttpConnectionWrapper() {
 		
@@ -38,9 +39,9 @@ public class HttpConnectionWrapper implements ConnectionWrapper {
 	
 	@Override
 	public void setRequestBody(String body) throws IOException {
-		PrintWriter bodyStream = new PrintWriter(connection.getOutputStream());
-		bodyStream.print(body);
-		bodyStream.close();
+		OutputStreamWriter bodyStreamWriter = new OutputStreamWriter(connection.getOutputStream(), charsetEncoding);
+		bodyStreamWriter.write(body);
+		bodyStreamWriter.close();
 	}
 	
 	@Override
@@ -79,15 +80,16 @@ public class HttpConnectionWrapper implements ConnectionWrapper {
 			output = connection.getErrorStream();
 		}
 		
-		Scanner scanner = new Scanner(output);
+		InputStreamReader streamReader = new InputStreamReader(output, charsetEncoding);
+
+		int currentReadByte;
 		
-		while(scanner.hasNextLine()) {
-			builderForBody.append(scanner.nextLine());
-			builderForBody.append("\r");
+		while((currentReadByte = streamReader.read()) > -1) {
+			builderForBody.append((char) currentReadByte);
 		}
 		
 		output.close();
-		scanner.close();
+		streamReader.close();
 		
 		return builderForBody.toString();
 	}
@@ -102,5 +104,10 @@ public class HttpConnectionWrapper implements ConnectionWrapper {
 		connection = (HttpURLConnection) new URL(uri).openConnection();
 		connection.setDoOutput(true);
 		connection.setDoInput(true);
+	}
+
+	@Override
+	public void setCharsetEncoding(String charsetEncoding) {
+		this.charsetEncoding = charsetEncoding;
 	}
 }

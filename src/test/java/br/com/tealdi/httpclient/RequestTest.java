@@ -13,10 +13,24 @@ public class RequestTest {
 		String body = "body";
 		String uri = "my-uri";
 		
-		Request request = new Request(uri, body, header);
+		String charsetEncoding = "ISO-8859-1";
+		Request request = new Request(uri, body, header, charsetEncoding);
 		
 		Assert.assertEquals(uri, request.getUri()); 
 		Assert.assertEquals(body, request.getBody()); 
 		Assert.assertEquals(header, request.getHeader()); 
+		Assert.assertEquals(charsetEncoding, request.getCharsetEncoding()); 
+	}
+	
+	@Test
+	public void shouldCreateARequestAsUtf8WhenPassAnEmptyStringAsCharsetEncoding() {
+		
+		Assert.assertEquals("UTF-8", new Request("", "", null, "").getCharsetEncoding()); 
+	}
+	
+	@Test
+	public void shouldCreateARequestAsUtf8WhenPassANullStringAsCharsetEncoding() {
+		
+		Assert.assertEquals("UTF-8", new Request("", "", null, null).getCharsetEncoding()); 
 	}
 }

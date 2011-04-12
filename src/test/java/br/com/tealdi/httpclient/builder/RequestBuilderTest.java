@@ -36,6 +36,15 @@ public class RequestBuilderTest {
 	}
 	
 	@Test
+	public void shouldCreateARequestWithAnSpecificCharsetEncoding() {
+		String charsetEncoding = "specific-charset-encoding";
+		
+		Request request = builder.withCharsetEncoding(charsetEncoding).instance();
+		
+		Assert.assertEquals(charsetEncoding, request.getCharsetEncoding());
+	}
+	
+	@Test
 	public void shouldCreateARequestWithAHeader() {
 		Header header = new Header();
 		

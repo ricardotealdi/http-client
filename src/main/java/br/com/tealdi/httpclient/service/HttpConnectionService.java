@@ -27,6 +27,7 @@ public class HttpConnectionService implements ConnectionService {
 	@Override
 	public Response sendTo(Request request, String httpVerb) throws MalformedURLException, IOException {
 		wrapper.setUri(request.getUri());
+		wrapper.setCharsetEncoding(request.getCharsetEncoding());
 		wrapper.setRequestMethod(httpVerb);
 		wrapper.setRequestHeader(request.getHeader());
 		

@@ -25,4 +25,6 @@ public interface ConnectionWrapper {
 	
 	public abstract void disconnect();
 
+	public abstract void setCharsetEncoding(String charsetEncoding);
+
 }

@@ -34,6 +34,7 @@ public class HttpConnectionServiceTest {
 	private Request request;
 	private String verb;
 	private Header responseHeader;
+	private String charset;
 
 	@Before
 	public void setUp() throws IOException {
@@ -51,7 +52,8 @@ public class HttpConnectionServiceTest {
 		uri = "uri";
 		body = "body";
 		header = new Header();
-		request = new Request(uri, body, header);
+		charset = "any-charset";
+		request = new Request(uri, body, header, charset);
 		
 		verb = "any-verb";
 	}
@@ -63,6 +65,7 @@ public class HttpConnectionServiceTest {
 		verify(wrapper, times(1)).setUri(uri);
 		verify(wrapper, times(1)).setRequestMethod(verb);
 		verify(wrapper, times(1)).setRequestHeader(header);
+		verify(wrapper, times(1)).setCharsetEncoding(charset);
 		verify(wrapper, times(0)).setRequestBody(body);
 		verify(wrapper, times(1)).execute();
 		verify(wrapper, times(1)).getResponseStatusCode();
