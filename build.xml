@@ -60,7 +60,9 @@
 
 		<jar destfile="${package.name.with.timestamp}" 
 			basedir="${temp.dir.classes}" 
-			excludes="**/*Test.class" />
+			excludes="**/*Test.class">
+			<fileset file="LICENSE" />
+		</jar>
 	</target>
 
 </project>
